@@ -1,5 +1,18 @@
+import { useSelector } from "react-redux";
+
 function CarValue() {
-  return <div>CarValue</div>;
+  const totalCost = useSelector(({ cars: { data, searchTerm } }) => {
+    const filteredCars = data.filter((car) => {
+      return car.name.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+    let cost = 0;
+    filteredCars.map((car) => {
+      return (cost += car.cost);
+    });
+    return cost;
+  });
+
+  return <div className="car-value">Total Cost:${totalCost}</div>;
 }
 
 export default CarValue;
